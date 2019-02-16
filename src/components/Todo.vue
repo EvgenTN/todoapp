@@ -2,8 +2,7 @@
   <div class="todo">
     <input :id="todo.id" type="checkbox" :checked="todo.isChecked">
     <label :for="todo.id">
-      <span>{{ todo.description }} {{todo.id}}</span>
-      <!-- <span>{{ todo.isChecked }}</span> -->
+      <span>{{ todo.description }}</span>
     </label>
     <button v-on:click='$emit("remove", todo.id)'>DLT</button>
   </div>
