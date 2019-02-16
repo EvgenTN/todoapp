@@ -1,61 +1,66 @@
 <template>
   <div>
-    <Todos 
+    <TodoInput 
+      v-model="newtodo"
+      placeholder="add some todo"
+      v-on:keyup.enter='addTodo'
+    />
+    <Todos
     todopr="some todo"
     second="second"
     :todos="todos"
+    @remove="removeTodo"
   />
-   <!-- <p v-bind="todos[0].description"></p> -->
   </div>
 </template>
 
 <script>
-import Todos from "@/components/Todos.vue";
+import Todos from '@/components/Todos.vue'
+import TodoInput from '@/components/TodoInput'
+
+let nextId = 1
 
 export default {
-  name: "todopage",
+  name: 'todopage',
   components: {
-    Todos
+    Todos,
+    TodoInput
   },
   data () {
     return {
       todos: [
         {
           isChecked: false,
-          description: "fgfhhff",
-          id: 1
+          description: 'fgfhhff',
+          id: nextId++
         },
         {
           isChecked: true,
-          description: "2424242",
-          id: 2
+          description: '2424242',
+          id: nextId++
         },
         {
           isChecked: false,
-          description: "fgfreteyeycmfk fkfkhhff",
-          id: 3
+          description: 'fgfreteyeycmfk fkfkhhff',
+          id: nextId++
         }
-      ]
-    };
+      ],
+      newtodo: ''
+    }
+  },
+  methods: {
+    removeTodo (id) {
+      console.log(id)
+      this.todos = this.todos.filter(item => item.id !== id)
+    },
+    addTodo () {
+      this.todos.push({
+        isChecked: false,
+        description: this.newtodo.trim(),
+        id: nextId++
+      })
+      this.newtodo = ''
+    }
   }
-};
-
-// const todos = [
-//   {
-//     isChecked: false,
-//     description: "fgfhhff",
-//     id: 1
-//   },
-//   {
-//     isChecked: true,
-//     description: "2424242",
-//     id: 2
-//   },
-//   {
-//     isChecked: false,
-//     description: "fgfreteyeycmfk fkfkhhff",
-//     id: 3
-//   }
-// ];
-// console.log(todos);
+}
 </script>
