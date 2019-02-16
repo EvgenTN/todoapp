@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import Todos from '@/components/Todos.vue'
+import Todos from "@/components/Todos.vue";
 
 export default {
-  name: 'todopage',
+  name: "todopage",
   components: {
     Todos
   },
@@ -22,20 +22,40 @@ export default {
       todos: [
         {
           isChecked: false,
-          description: 'fgfhhff',
+          description: "fgfhhff",
           id: 1
         },
         {
           isChecked: true,
-          description: '2424242',
+          description: "2424242",
           id: 2
-        },{
+        },
+        {
           isChecked: false,
-          description: 'fgfreteyeycmfk fkfkhhff',
+          description: "fgfreteyeycmfk fkfkhhff",
           id: 3
         }
       ]
-    }
+    };
   }
-}
+};
+
+// const todos = [
+//   {
+//     isChecked: false,
+//     description: "fgfhhff",
+//     id: 1
+//   },
+//   {
+//     isChecked: true,
+//     description: "2424242",
+//     id: 2
+//   },
+//   {
+//     isChecked: false,
+//     description: "fgfreteyeycmfk fkfkhhff",
+//     id: 3
+//   }
+// ];
+// console.log(todos);
 </script>
