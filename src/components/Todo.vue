@@ -10,11 +10,11 @@
 
 <script>
 export default {
-  name: "Todo",
+  name: 'Todo',
   props: {
     todo: {}
   }
-};
+}
 </script>
 <style lang="scss">
 

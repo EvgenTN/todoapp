@@ -14,7 +14,7 @@
 <script>
 import Todo from './Todo.vue'
 export default {
-  name: "Todos",
+  name: 'Todos',
   components: {
     Todo
   },
@@ -28,5 +28,5 @@ export default {
   // },
   computed: {},
   methods: {}
-};
+}
 </script>
