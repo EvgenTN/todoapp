@@ -1,9 +1,9 @@
 <template>
   <div class="todo">
-    <input id="sss" type="checkbox" checked="isChecked">
-    <label for="sss">
-      <span>{{ description }} </span>
-      <span>{{ isChecked }}</span>
+    <input id="todo.id" type="checkbox" :checked="todo.isChecked">
+    <label for="todo.id">
+      <span>{{ todo.description }} {{todo.id}}</span>
+      <!-- <span>{{ todo.isChecked }}</span> -->
     </label>
   </div>
 </template>
@@ -12,8 +12,7 @@
 export default {
   name: "Todo",
   props: {
-    isChecked: Boolean,
-    description: String
+    todo: {}
   }
 };
 </script>
