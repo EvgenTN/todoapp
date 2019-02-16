@@ -3,6 +3,7 @@
     <Todos 
     todopr="some todo"
     second="second"
+    :todos="todos"
   />
    <!-- <p v-bind="todos[0].description"></p> -->
   </div>
@@ -16,23 +17,25 @@ export default {
   components: {
     Todos
   },
-  data: {
-    todos: [
-      {
-        isChecked: false,
-        description: 'fgfhhff',
-        id: 1
-      },
-      {
-        isChecked: true,
-        description: '2424242',
-        id: 2
-      },{
-        isChecked: false,
-        description: 'fgfreteyeycmfk fkfkhhff',
-        id: 3
-      }
-    ]
+  data () {
+    return {
+      todos: [
+        {
+          isChecked: false,
+          description: 'fgfhhff',
+          id: 1
+        },
+        {
+          isChecked: true,
+          description: '2424242',
+          id: 2
+        },{
+          isChecked: false,
+          description: 'fgfreteyeycmfk fkfkhhff',
+          id: 3
+        }
+      ]
+    }
   }
 }
 </script>
