@@ -1,9 +1,12 @@
 <template>
-    <input 
+    <div>
+      <input 
       type="text"
       :value="value"
       v-on="listeners"
     />
+    <button v-on:click='deleteDone()'>Remove</button>
+    </div>
 </template>
 
 <script>
@@ -13,7 +16,8 @@ export default {
     value: {
       type: String,
       default: '',
-    }
+    },
+    todos: Array
   },
   computed: {
     listeners () {
@@ -21,6 +25,11 @@ export default {
         ...this.$listeners,
         input: event => this.$emit('input', event.target.value)
       }
+    }
+  },
+  methods: {
+    deleteDone() {
+      this.$emit('delDone')
     }
   }
 }
