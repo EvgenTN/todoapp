@@ -5,9 +5,10 @@
       placeholder="add some todo"
       v-on:keyup.enter="addTodo"
       :todos="todos"
-      @delDone="deleteDone"
+      @del-done="deleteDone"
     />
-    <Todos todopr="some todo" second="second" :todos="todos" @remove="removeTodo"/>
+    <Todos :todos="todos" @remove="removeTodo" @toggle-check="toggleCheck"
+/>
   </div>
 </template>
 
@@ -18,7 +19,7 @@ import TodoInput from "@/components/TodoInput";
 import axios from "axios";
 
 let nextId = 4;
-const todosUrl = 'http://localhost:3000/todos';
+const todosUrl = 'http://localhost:3000/todos/';
 
 export default {
   name: "todopage",
@@ -43,21 +44,35 @@ export default {
         description: this.newtodo.trim(),
         id: nextId++
       });
+      // axios.post(todosUrl, {
+      //   isChecked: false,
+      //   description: this.newtodo.trim(),
+      //   id: nextId++
+      // });
       this.newtodo = "";
     },
     deleteDone() {
       this.todos = this.todos.filter(item => item.isChecked !== true);
       // const result = this.todos.filter(item => item.isChecked !== true);
-      // this.post(result)
+      // console.log(result)
+      // axios.post(todosUrl, result)
+    },
+    getData() {
+      axios
+      .get(todosUrl)
+      .then(response => {this.todos = response.data; console.log(this.todos)});
+    },
+    toggleCheck(todo) {
+      this.todos = this.todos.map(item => {
+        if(item.id === todo.id) {
+          item.isChecked = !item.isChecked
+        }
+        return item
+        })
     }
   },
   mounted() {
-    // axios
-    //   .get(this.todosUrl)
-    //   .then(response => {this.todos = response});
-    fetch(todosUrl)
-      .then(response => response.json())
-      .then(data => this.todos = data)
-  }
-};
+    this.getData()
+  },
+}
 </script>
