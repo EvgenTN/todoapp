@@ -1,6 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is todo page</h1>
+    <h1>Todo list:</h1>
+    <select>
+      <option selected>Show all</option>
+      <option>Show done</option>
+      <option>Show active</option>
+    </select>
     <Todo
       v-for="todo in todos"
       :key="todo.id"
@@ -21,6 +26,11 @@ export default {
   props: {
     todos: Array
   },
+  // data() {
+  //   return {
+  //     tdlist: this.getList()
+  //   }
+  // },
   computed: {},
   methods: {
     removeTodo (id) {
@@ -29,6 +39,9 @@ export default {
     toggleCheck (todo) {
       this.$emit('toggle-check', todo)
     }
+    // getList() {
+
+    // }
   }
 }
 </script>

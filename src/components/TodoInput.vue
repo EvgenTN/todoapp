@@ -2,6 +2,7 @@
     <div>
       <input
       type="text"
+      placeholder="add some todo"
       :value="value"
       v-on="listeners"
     />
