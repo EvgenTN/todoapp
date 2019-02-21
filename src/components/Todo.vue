@@ -1,6 +1,11 @@
 <template>
   <div class="todo">
-    <input :id="todo.id" type="checkbox" :checked="todo.isChecked">
+    <input
+      :id="todo.id"
+      type="checkbox"
+      :checked="todo.isChecked"
+      v-on:click='$emit("toggle-check", todo)'
+      >
     <label :for="todo.id">
       <span>{{ todo.description }}</span>
     </label>
