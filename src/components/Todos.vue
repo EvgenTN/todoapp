@@ -1,10 +1,12 @@
 <template>
   <div class="about">
     <h1>Todo list:</h1>
-    <select>
-      <option selected>Show all</option>
-      <option>Show done</option>
-      <option>Show active</option>
+    <select v-model="changeFilter">
+      <option
+        v-for="option in options"
+        :key='option.value'
+        :value="option.value"
+        >{{  option.text }}</option>
     </select>
     <Todo
       v-for="todo in todos"
@@ -24,13 +26,19 @@ export default {
     Todo
   },
   props: {
-    todos: Array
+    todos: Array,
   },
-  // data() {
-  //   return {
-  //     tdlist: this.getList()
-  //   }
-  // },
+  data() {
+    return {
+      visibleTodos: [],
+      filterState: 'all',
+      options: [
+        {text: 'all', value: 'all'},
+        {text: 'done', value: 'done'},
+        {text: 'active', value: 'active'}
+      ]
+    }
+  },
   computed: {},
   methods: {
     removeTodo (id) {
@@ -38,6 +46,18 @@ export default {
     },
     toggleCheck (todo) {
       this.$emit('toggle-check', todo)
+    },
+    changeFilter(state) {
+    this.filterState = state;
+    this.getVisibleTodos();
+    },
+    getVisibleTodos() {
+    if (this.todos) {
+      this.visibleTodos = this.todos.filter((todo) =>
+       (this.filterState === 'all') ||
+        (todo.isChecked && this.filterState === 'done') ||
+        (!todo.isChecked && this.filterState === 'active'));
+      }
     }
     // getList() {
 

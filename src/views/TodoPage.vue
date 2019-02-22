@@ -17,7 +17,6 @@ import TodoInput from "@/components/TodoInput";
 // import db from "../../db.json";
 import axios from "axios";
 
-let nextId = 4;
 const todosUrl = 'http://localhost:3000/todos';
 const tdUrl = 'http://localhost:3000/';
 
@@ -36,11 +35,11 @@ export default {
   },
   methods: {
     removeTodo(id) {
-      console.log(id);
       // this.todos = this.todos.filter(item => item.id !== id);
-      axios
+      return axios
         .delete(`${todosUrl}/${id}`)
         .then(response => console.log(response))
+        .then(this.todos = this.todos.filter(item => item.id !== id))
     },
     addTodo() {
       // this.todos.push({
@@ -52,34 +51,51 @@ export default {
         .post(todosUrl, {
           isChecked: false,
           description: this.newtodo.trim(),
-          id: nextId++
+          id: this.nextID++
         })
         .then(response => this.todos.push(response.data))
       this.newtodo = "";
     },
     deleteDone() {
-      this.todos = this.todos.filter(item => item.isChecked !== true);
-      // let result = this.todos.filter(item => item.isChecked !== true);
+      let result = this.todos.filter(item => item.isChecked === true);
       // console.log(result)
+      function ad () {for (let todo of result) { axios
+        .delete(`${todosUrl}/${todo.id}`)
+        .then(response => console.log('answer',response))
+        }
+      }
+      ad()
+      this.todos = this.todos.filter(item => item.isChecked !== true);
+      // console.log(ad())
       // axios
-      //   .post(todosUrl, result)
-      //   .then(response => this.todos = response.data)
+      //   .delete(`${todosUrl}/${ad().id}`)
+      //   .then(response => console.log('answer',response))
+        // .then(response => this.todos = response.data)
+        // const result = this.todos.filter(item => item.isChecked === true)
+        // // console.log(result)
+        // return axios
+        //   .delete(`${todosUrl}/${id}`, result)
+        //   .then(response => console.log('del-done', response))
     },
     getData() {
-      axios
-      .get(todosUrl)
-      .then(response => {
-        this.todos = response.data;
-        // this.defaultTodos = response.data;
-        console.log(this.todos)});
+      return axios
+        .get(todosUrl)
+        .then(response => {
+          this.todos = response.data;
+          // this.defaultTodos = response.data;
+          console.log(this.todos)});
     },
     toggleCheck(todo) {
-      this.todos = this.todos.map(item => {
-        if(item.id === todo.id) {
-          item.isChecked = !item.isChecked
-        }
-        return item
-        })
+      // this.todos = this.todos.map(item => {
+      //   if(item.id === todo.id) {
+      //     item.isChecked = !item.isChecked
+      //   }
+      //   return item
+      //   })
+      todo.isChecked = !todo.isChecked
+      return axios
+        .patch(`${todosUrl}/${todo.id}`, todo)
+        .then(response => console.log(response.data))
     }
   },
   mounted() {
