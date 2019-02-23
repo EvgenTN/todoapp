@@ -18,6 +18,8 @@ import TodoInput from "@/components/TodoInput";
 import axios from "axios";
 
 const todosUrl = 'http://localhost:3000/todos';
+// const todosUrl = 'http://192.168.0.109:3000/todos';
+
 const tdUrl = 'http://localhost:3000/';
 
 export default {
@@ -38,8 +40,7 @@ export default {
       // this.todos = this.todos.filter(item => item.id !== id);
       return axios
         .delete(`${todosUrl}/${id}`)
-        .then(response => console.log(response))
-        .then(this.todos = this.todos.filter(item => item.id !== id))
+        .then(response => response.status === 200 ? this.todos = this.todos.filter(item => item.id !== id) : this.todos)
     },
     addTodo() {
       // this.todos.push({
@@ -49,7 +50,7 @@ export default {
       // });
       axios
         .post(todosUrl, {
-          isChecked: false,
+          isChecked: true,
           description: this.newtodo.trim(),
           id: this.nextID++
         })
@@ -57,25 +58,15 @@ export default {
       this.newtodo = "";
     },
     deleteDone() {
-      let result = this.todos.filter(item => item.isChecked === true);
-      // console.log(result)
-      function ad () {for (let todo of result) { axios
-        .delete(`${todosUrl}/${todo.id}`)
-        .then(response => console.log('answer',response))
-        }
-      }
-      ad()
-      this.todos = this.todos.filter(item => item.isChecked !== true);
-      // console.log(ad())
-      // axios
-      //   .delete(`${todosUrl}/${ad().id}`)
-      //   .then(response => console.log('answer',response))
-        // .then(response => this.todos = response.data)
-        // const result = this.todos.filter(item => item.isChecked === true)
-        // // console.log(result)
-        // return axios
-        //   .delete(`${todosUrl}/${id}`, result)
-        //   .then(response => console.log('del-done', response))
+      const result = this.todos.filter(item => item.isChecked === true);
+      result.map(todo =>
+        axios
+          .delete(`${todosUrl}/${todo.id}`)
+          .then(response =>
+            {response.status === 200 ? this.todos = this.todos.filter(item => item.id !== todo.id) : this.todos}
+          )
+      )
+      // this.todos = this.todos.filter(item => item.isChecked !== true);
     },
     getData() {
       return axios
