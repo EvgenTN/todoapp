@@ -1,6 +1,13 @@
 <template>
   <div class="about">
-    <h1>This is todo page</h1>
+    <h1>Todo list:</h1>
+    <select v-model="changeFilter">
+      <option
+        v-for="option in options"
+        :key='option.value'
+        :value="option.value"
+        >{{  option.text }}</option>
+    </select>
     <Todo
       v-for="todo in todos"
       :key="todo.id"
@@ -19,7 +26,18 @@ export default {
     Todo
   },
   props: {
-    todos: Array
+    todos: Array,
+  },
+  data() {
+    return {
+      visibleTodos: [],
+      filterState: 'all',
+      options: [
+        {text: 'all', value: 'all'},
+        {text: 'done', value: 'done'},
+        {text: 'active', value: 'active'}
+      ]
+    }
   },
   computed: {},
   methods: {
@@ -28,7 +46,22 @@ export default {
     },
     toggleCheck (todo) {
       this.$emit('toggle-check', todo)
+    },
+    changeFilter(state) {
+    this.filterState = state;
+    this.getVisibleTodos();
+    },
+    getVisibleTodos() {
+    if (this.todos) {
+      this.visibleTodos = this.todos.filter((todo) =>
+       (this.filterState === 'all') ||
+        (todo.isChecked && this.filterState === 'done') ||
+        (!todo.isChecked && this.filterState === 'active'));
+      }
     }
+    // getList() {
+
+    // }
   }
 }
 </script>
