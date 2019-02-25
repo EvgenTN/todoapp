@@ -1,13 +1,17 @@
 <template>
   <div class="about" v-if='todos'>
     <h1>Todo list:</h1>
-    <select :click='getVisibleTodos' v-model="selected">
-      <option
-        v-for="option in options"
-        :key='option.value'
-        :value="option.value"
-        >{{  option.text }}</option>
+    <div class="selectDiv">
+      <span>Show todos:  </span>
+      <select class="select" :click='getVisibleTodos' v-model="selected">
+        <option
+          class="option"
+          v-for="option in options"
+          :key='option.value'
+          :value="option.value"
+          >{{  option.text }}</option>
     </select>
+    </div>
     <Todo
       v-for="todo in visibleTodos"
       :key="todo.id"
@@ -58,3 +62,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .selectDiv {
+    margin-bottom: 30px;
+  }
+  .select {
+    background: white;
+    border: solid 2px rgb(63, 120, 173);
+    border-radius: 5px;
+    color: rgb(63, 120, 173)
+  }
+</style>
+
