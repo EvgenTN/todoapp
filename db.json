@@ -16,9 +16,14 @@
       "id": 3
     },
     {
-      "isChecked": false,
+      "isChecked": true,
       "description": "itscool",
       "id": 4
+    },
+    {
+      "isChecked": true,
+      "description": "it works",
+      "id": 5
     }
   ],
   "heroes": [

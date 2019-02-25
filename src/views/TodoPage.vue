@@ -20,8 +20,6 @@ import axios from "axios";
 const todosUrl = 'http://localhost:3000/todos';
 // const todosUrl = 'http://192.168.0.109:3000/todos';
 
-const tdUrl = 'http://localhost:3000/';
-
 export default {
   name: "todopage",
   components: {
@@ -46,11 +44,11 @@ export default {
       // this.todos.push({
       //   isChecked: false,
       //   description: this.newtodo.trim(),
-      //   id: nextId++
+      //   id: this.nextID++
       // });
       axios
         .post(todosUrl, {
-          isChecked: true,
+          isChecked: false,
           description: this.newtodo.trim(),
           id: this.nextID++
         })
