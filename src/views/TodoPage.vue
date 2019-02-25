@@ -48,7 +48,7 @@ export default {
       // });
       axios
         .post(todosUrl, {
-          isChecked: true,
+          isChecked: false,
           description: this.newtodo.trim(),
           id: this.nextID++
         })
