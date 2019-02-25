@@ -5,7 +5,6 @@
       <span>Show todos:  </span>
       <select class="select" :click='getVisibleTodos' v-model="selected">
         <option
-          class="option"
           v-for="option in options"
           :key='option.value'
           :value="option.value"
