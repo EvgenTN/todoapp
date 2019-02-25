@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
+  <div class="about" v-if='todos'>
     <h1>Todo list:</h1>
-    <select v-model="changeFilter">
+    <select :click='getVisibleTodos' v-model="selected">
       <option
         v-for="option in options"
         :key='option.value'
@@ -9,7 +9,7 @@
         >{{  option.text }}</option>
     </select>
     <Todo
-      v-for="todo in todos"
+      v-for="todo in visibleTodos"
       :key="todo.id"
       :todo="todo"
       @remove="removeTodo(todo.id)"
@@ -30,38 +30,31 @@ export default {
   },
   data() {
     return {
-      visibleTodos: [],
-      filterState: 'all',
       options: [
         {text: 'all', value: 'all'},
         {text: 'done', value: 'done'},
         {text: 'active', value: 'active'}
-      ]
+      ],
+      selected: 'all'
     }
   },
-  computed: {},
+  computed: {
+    getVisibleTodos() {
+      if (this.todos) {
+        this.visibleTodos = this.todos.filter((todo) =>
+        (this.selected === 'all') ||
+        (todo.isChecked && this.selected === 'done') ||
+        (!todo.isChecked && this.selected === 'active'))
+      }
+    }
+  },
   methods: {
     removeTodo (id) {
       this.$emit('remove', id)
     },
     toggleCheck (todo) {
       this.$emit('toggle-check', todo)
-    },
-    changeFilter(state) {
-    this.filterState = state;
-    this.getVisibleTodos();
-    },
-    getVisibleTodos() {
-    if (this.todos) {
-      this.visibleTodos = this.todos.filter((todo) =>
-       (this.filterState === 'all') ||
-        (todo.isChecked && this.filterState === 'done') ||
-        (!todo.isChecked && this.filterState === 'active'));
-      }
     }
-    // getList() {
-
-    // }
   }
 }
 </script>
